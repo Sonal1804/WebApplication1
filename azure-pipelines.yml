@@ -27,11 +27,14 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'build'
+#     projects: '**/*.csproj'
+#     arguments: '--configuration $(buildConfiguration)'
+
+- script: dotnet test '**/*.csproj' --configuration $(buildConfiguration) --logger trx
+  displayName: 'Run API integration tests - $(buildConfiguration)'
 
 
 
