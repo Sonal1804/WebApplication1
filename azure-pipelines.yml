@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
-- master
+- main
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -12,29 +12,22 @@ pool:
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
-
+  buildConfiguration: 'Release'
 
 steps:
-
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '3.x'
-
+    version: '6.x'
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
 
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'build'
-#     projects: '**/*.csproj'
-#     arguments: '--configuration $(buildConfiguration)'
-
-- script: dotnet test '**/*.csproj' --configuration $(buildConfiguration) --logger trx
-  displayName: 'Run API integration tests - $(buildConfiguration)'
-
-
-
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: build
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
