@@ -12,13 +12,15 @@ pool:
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+
 
 steps:
+
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
     version: '6.x'
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
@@ -26,8 +28,10 @@ steps:
     restoreSolution: '$(solution)'
 
 - task: DotNetCoreCLI@2
-  displayName: Build
   inputs:
     command: 'build'
     projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
+
+# - script: dotnet test '**/*.csproj' --configuration $(buildConfiguration) --logger trx
+#   displayName: 'Run API integration tests - $(buildConfiguration)'
