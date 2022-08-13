@@ -13,7 +13,14 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
 
+
 steps:
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '5.x'
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
